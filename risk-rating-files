@@ -534,7 +534,7 @@ select base.user_id
 ,case when min_tier_level = 0 then 1
 when min_tier_level = 1 then 0.2 * (max_amount_of_days - 14)/ (45-14) + 0.5
 when min_tier_level = 2 then 0.2 * (max_amount_of_days - 14)/ (45-14) + 0.3
-else 0 end as bank_rr_tiers
+else 0 end as user_rr_tiers
 from userid base
 left join rr_tmp
 on base.user_id = rr_tmp.user_id
