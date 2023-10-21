@@ -1,0 +1,637 @@
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v1_restricted_payment_methods
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v1_restricted_payment_methods_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v1_restricted_payment_methods_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY Restricted_method_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v1_restricted_payment_methods
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v1_restricted_payment_methods_dedup;
+--16328
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v1_user_tags_membership
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v1_user_tags_membership_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v1_user_tags_membership_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY user_id, user_tag_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v1_user_tags_membership
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v1_user_tags_membership_dedup;
+-- 23520
+
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v1_user_tags_membership
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v2_user_logins_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v2_user_logins_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY user_login_log_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v2_user_logins
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v2_user_logins_dedup;
+-- 413673
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v1_chargebacks
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v1_chargebacks_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v1_chargebacks_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY chargeback_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v1_chargebacks
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v1_chargebacks_dedup;;
+-- 31252
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v1_user_purchases
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v1_user_purchases_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v1_user_purchases_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY purchase_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v1_user_purchases
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v1_user_purchases_dedup ;
+-- 5247099
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v1_cash_balance_deposits
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v1_cash_balance_deposits_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v1_cash_balance_deposits_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY cash_balance_deposit_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v1_cash_balance_deposits
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v1_cash_balance_deposits_dedup;
+-- 1233751;
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v1_transaction_log
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v1_transaction_log_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v1_transaction_log_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY transaction_log_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v1_transaction_log
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v1_transaction_log_dedup;
+-- 8045126
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v1_unrecovered_chargebacks
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v1_unrecovered_chargebacks_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v1_unrecovered_chargebacks_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY transaction_log_id ORDER BY chargeback_date DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v1_unrecovered_chargebacks
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+
+select count(*) from ml_fluz.input_prod_fluz_import_v1_unrecovered_chargebacks_dedup;
+-- 3385;
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v1_user_tags
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v1_user_tags_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v1_user_tags_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY user_tag_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v1_user_tags
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v1_user_tags_dedup;
+-- 82
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v2_bank_accounts
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v2_bank_accounts_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v2_bank_accounts_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY bank_account_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v2_bank_accounts
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v2_bank_accounts_dedup;
+-- 86482
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v1_bank_institution_auths
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v1_bank_institution_auths_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v1_bank_institution_auths_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY bank_institution_auth_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v1_bank_institution_auths
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v1_bank_institution_auths_dedup;
+-- 26722;
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v1_plaid_credentials
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v1_plaid_credentials_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v1_plaid_credentials_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY plaid_credential_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v1_plaid_credentials
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v1_plaid_credentials_dedup;
+--43586;
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v2_users
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v2_users_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v2_users_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v2_users
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v2_users_dedup;
+-- 334843;
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v2_seats
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v2_seats_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v2_seats_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY seat_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v2_seats
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+select count(*) from ml_fluz.input_prod_fluz_import_v2_seats_dedup;
+--339157;
+
+
+-- Deduplicate dwh_fluz_v2.input_prod_fluz_import_v1_accounts
+DROP TABLE IF EXISTS ml_fluz.input_prod_fluz_import_v1_accounts_dedup;
+CREATE TABLE ml_fluz.input_prod_fluz_import_v1_accounts_dedup AS
+WITH dedup AS (
+SELECT *, ROW_NUMBER() OVER (PARTITION BY account_id ORDER BY updated_at DESC) AS rn
+FROM dwh_fluz_v2.input_prod_fluz_import_v1_accounts
+)
+SELECT * FROM dedup
+WHERE rn = 1;
+
+
+select count(*) from ml_fluz.input_prod_fluz_import_v1_accounts_dedup;
+-- 334388;
+
+
+
+-- Start
+-- Drop and create ml_fluz.bank_tier_label using de-duplicated table
+DROP TABLE IF EXISTS ml_fluz.bank_tier_label;
+CREATE TABLE ml_fluz.bank_tier_label AS
+with recent as(
+SELECT payment_method_id AS bank_account_id, tier_level, amount_of_days, user_id
+, ROW_NUMBER() OVER (PARTITION BY payment_method_id ORDER BY updated_at DESC) AS rn
+FROM ml_fluz.input_prod_fluz_import_v1_restricted_payment_methods_dedup
+)
+select bank_account_id, tier_level, amount_of_days, user_id
+from recent
+where rn = 1
+;
+
+
+select count(*) from ml_fluz.bank_tier_label;
+-- 11174
+
+-- Drop and create ml_fluz.featureV2_ach_return_v2_p1 using de-duplicated tables
+DROP TABLE IF EXISTS ml_fluz.featureV2_ach_return_v2_p1;
+CREATE TABLE ml_fluz.featureV2_ach_return_v2_p1 AS
+WITH exempt_user AS (
+SELECT user_id
+FROM ml_fluz.input_prod_fluz_import_v1_user_tags_membership_dedup
+WHERE user_tag_id = '64fd39d1-0c4d-40dd-ba06-46a263d3e3cb'
+GROUP BY 1
+)
+SELECT cb.*, tl.transaction_log_id,
+CASE WHEN "reason_code" IN ('R01', 'NSF', 'R01-NSF', 'R09', 'R03') THEN 'NSF'
+WHEN "reason_code" IN ('Fraud-Other', 'R02', 'Account-Invalid', 'R02-AccountClosed', 'R11', 'R10-NotAuthorized') THEN 'Fraud'
+WHEN "reason_code" = 'R16' THEN 'OFAC'
+WHEN "reason_code" IN ('R10', '20R10') THEN 'Product Unsatisfactory'
+WHEN "reason_code" IN ('Account-Closed', 'R20') THEN 'System Design Flaw'
+ELSE 'to exclude'
+END AS category
+FROM ml_fluz.input_prod_fluz_import_v1_chargebacks_dedup cb
+LEFT JOIN ml_fluz.input_prod_fluz_import_v1_user_purchases_dedup up ON cb.purchase_id = up.purchase_id
+LEFT JOIN ml_fluz.input_prod_fluz_import_v1_cash_balance_deposits_dedup cbd ON cb.cash_balance_deposit_id = cbd.cash_balance_deposit_id
+LEFT JOIN ml_fluz.input_prod_fluz_import_v1_transaction_log_dedup tl ON up.transaction_log_id = tl.transaction_log_id
+LEFT JOIN exempt_user internal_user ON internal_user."user_id" = cb."user_id"
+WHERE tl."bank_account_id" IS NOT NULL
+AND internal_user."user_id" IS NULL;
+
+
+select count(*) from ml_fluz.featureV2_ach_return_v2_p1 ;
+-- 6427;
+
+
+-- Drop and create ml_fluz.featureV2_ach_return_v2_p2 using de-duplicated tables
+DROP TABLE IF EXISTS ml_fluz.featureV2_ach_return_v2_p2;
+CREATE TABLE ml_fluz.featureV2_ach_return_v2_p2 AS
+SELECT cb.*, tl.transaction_log_id,
+CASE WHEN "reason_code" IN ('R01', 'NSF', 'R01-NSF', 'R09', 'R03') THEN 'NSF'
+WHEN "reason_code" IN ('Fraud-Other', 'R02', 'Account-Invalid', 'R02-AccountClosed', 'R11', 'R10-NotAuthorized') THEN 'Fraud'
+WHEN "reason_code" = 'R16' THEN 'OFAC'
+WHEN "reason_code" IN ('R10', '20R10') THEN 'Product Unsatisfactory'
+WHEN "reason_code" IN ('Account-Closed', 'R20') THEN 'System Design Flaw'
+ELSE 'to exclude'
+END AS category
+FROM ml_fluz.input_prod_fluz_import_v1_chargebacks_dedup cb
+LEFT JOIN ml_fluz.input_prod_fluz_import_v1_user_purchases_dedup up ON cb.purchase_id = up.purchase_id
+LEFT JOIN ml_fluz.input_prod_fluz_import_v1_cash_balance_deposits_dedup cbd ON cb.cash_balance_deposit_id = cbd.cash_balance_deposit_id
+LEFT JOIN ml_fluz.input_prod_fluz_import_v1_transaction_log_dedup tl ON cbd.transaction_log_id = tl.transaction_log_id
+
+
+LEFT JOIN exempt_user internal_user ON internal_user."user_id" = cb."user_id"
+WHERE tl."bank_account_id" IS NOT NULL
+AND internal_user."user_id" IS NULL;
+
+select count(*) from ml_fluz.featureV2_ach_return_v2_p2;
+--3101;
+
+
+-- Drop ml_fluz.featureV2_ach_return if it exists
+DROP TABLE IF EXISTS ml_fluz.featureV2_ach_return;
+-- Create ml_fluz.featureV2_ach_return using de-duplicated tables
+CREATE TABLE ml_fluz.featureV2_ach_return AS
+(
+SELECT transaction_log_id, user_id, created_at, chargeback_amount, 1 AS ach_bad
+FROM ml_fluz.featureV2_ach_return_v2_p1 base
+WHERE category IN ('NSF', 'Fraud', 'OFAC')
+GROUP BY 1, 2, 3, 4
+UNION
+SELECT transaction_log_id, user_id, created_at, chargeback_amount, 1 AS ach_bad
+FROM ml_fluz.featureV2_ach_return_v2_p2 base
+WHERE category IN ('NSF', 'Fraud', 'OFAC')
+GROUP BY 1, 2, 3, 4
+);
+
+
+-- Count the records in ml_fluz.featureV2_ach_return
+SELECT COUNT(*) FROM ml_fluz.featureV2_ach_return;
+-- 3295;
+SELECT * FROM ml_fluz.featureV2_ach_return;
+
+-- Drop ml_fluz.bank_transactions_label if it exists
+DROP TABLE IF EXISTS ml_fluz.bank_transactions_label;
+-- Create ml_fluz.bank_transactions_label using de-duplicated tables
+
+
+CREATE TABLE ml_fluz.bank_transactions_label AS
+WITH exempt_users AS (
+SELECT DISTINCT user_id
+FROM ml_fluz.input_prod_fluz_import_v1_user_tags_membership_dedup
+WHERE user_tag_id IN (
+SELECT user_tag_id
+FROM ml_fluz.input_prod_fluz_import_v1_user_tags_dedup
+WHERE name = 'INTERNAL_FRAUD_FILTERS_ONLY'
+)
+),
+bad_label AS (
+SELECT a.transaction_log_id,
+MAX(CAST(from_iso8601_timestamp(a.created_at) AS DATE)) AS dt,
+
+MAX(CASE WHEN b.transaction_log_id IS NOT NULL OR ach_bad = 1 OR tier_level = 0 THEN 1 ELSE 0 END) AS is_bad
+FROM ml_fluz.input_prod_fluz_import_v1_transaction_log_dedup a
+LEFT OUTER JOIN ml_fluz.input_prod_fluz_import_v1_unrecovered_chargebacks_dedup b ON a.transaction_log_id = b.transaction_log_id
+LEFT OUTER JOIN exempt_users ON exempt_users.user_id = a.user_id
+LEFT OUTER JOIN ml_fluz.featureV2_ach_return ach ON a.transaction_log_id = ach.transaction_log_id
+LEFT OUTER JOIN ml_fluz.bank_tier_label bk ON a.bank_account_id = bk.bank_account_id
+WHERE a.bank_account_id IS NOT NULL AND a.bank_account_id != 'null'
+AND a.action_type = 'PURCHASE'
+AND exempt_users.user_id IS NULL
+GROUP BY 1
+)
+SELECT DISTINCT a.*, b.dt, b.is_bad
+FROM bad_label b
+LEFT JOIN ml_fluz.input_prod_fluz_import_v1_transaction_log_dedup a ON a.transaction_log_id = b.transaction_log_id;
+
+
+select count(*) from ml_fluz.bank_transactions_label ;
+--142137;
+
+
+
+
+drop table if exists ml_fluz.device_info;
+create table ml_fluz.device_info as
+select transaction_log_id, device_id, network, interface, model, brand, os_version, operation_system, ul.ip_address, is_bad, total_amount
+from ml_fluz.bank_transactions_label tl
+left join ml_fluz.prod_fluz_import_v2_user_logins_dedup ul
+on tl.user_login_id = ul.user_login_log_id
+where bank_account_id is not null
+and gateway_amount > 0
+;
+
+select count(*) from ml_fluz.device_info;
+-- 142547
+
+-- Drop ml_fluz.featureV2_device_id_risk_rating if it exists
+DROP TABLE IF EXISTS ml_fluz.featureV2_device_id_risk_rating;
+-- Create ml_fluz.featureV2_device_id_risk_rating using de-duplicated tables
+CREATE TABLE ml_fluz.featureV2_device_id_risk_rating AS
+SELECT device_id,
+COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) AS device_id_bad_cnt,
+COUNT(DISTINCT transaction_log_id) AS device_id_cnt,
+SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) AS device_id_bad_amt,
+SUM(total_amount) AS device_id_amt,
+1.0 * COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) / COUNT(DISTINCT transaction_log_id) AS device_id_bad_cnt_pct,
+1.0 * SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) / SUM(total_amount) AS device_id_bad_amt_pct
+FROM ml_fluz.device_info
+GROUP BY 1;
+
+
+select * from ml_fluz.featureV2_device_id_risk_rating;
+
+
+-- Drop ml_fluz.featureV2_bank_risk_rating if it exists
+DROP TABLE IF EXISTS ml_fluz.featureV2_phone_model_risk_rating;
+-- Create ml_fluz.featureV2_bank_risk_rating using de-duplicated tables
+CREATE TABLE ml_fluz.featureV2_phone_model_risk_rating AS
+with tmp as
+(SELECT model as phone_model,
+COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) AS phone_model_bad_cnt,
+COUNT(DISTINCT transaction_log_id) AS phone_model_cnt,
+SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) AS phone_model_bad_amt,
+SUM(total_amount) AS phone_model_amt,
+1.0 * COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) / COUNT(DISTINCT transaction_log_id) AS phone_model_bad_cnt_pct,
+1.0 * SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) / SUM(total_amount) AS phone_model_bad_amt_pct
+FROM ml_fluz.device_info
+GROUP BY 1)
+select phone_model, phone_model_bad_cnt, phone_model_cnt, phone_model_bad_amt, phone_model_amt, phone_model_bad_cnt_pct, phone_model_bad_amt_pct
+from tmp
+where phone_model_cnt>=10;
+
+
+select * from ml_fluz.featureV2_phone_model_risk_rating;
+
+
+-- Drop ml_fluz.featureV2_bank_risk_rating if it exists
+DROP TABLE IF EXISTS ml_fluz.featureV2_bank_risk_rating;
+-- Create ml_fluz.featureV2_bank_risk_rating using de-duplicated tables
+CREATE TABLE ml_fluz.featureV2_bank_risk_rating AS
+SELECT bank_account_id,
+COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) AS bank_bad_cnt,
+COUNT(DISTINCT transaction_log_id) AS bank_cnt,
+SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) AS bank_bad_amt,
+SUM(total_amount) AS bank_amt,
+1.0 * COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) / COUNT(DISTINCT transaction_log_id) AS bank_bad_cnt_pct,
+1.0 * SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) / SUM(total_amount) AS bank_bad_amt_pct
+FROM ml_fluz.bank_transactions_label
+GROUP BY 1;
+
+-- Count the records in ml_fluz.featureV2_bank_risk_rating
+SELECT COUNT(*) FROM ml_fluz.featureV2_bank_risk_rating;
+--18797;
+SELECT * FROM ml_fluz.featureV2_bank_risk_rating;
+
+
+
+
+-- Drop ml_fluz.featureV2_bank_risk_rating if it exists
+DROP TABLE IF EXISTS ml_fluz.featureV2_merchant_id_risk_rating;
+-- Create ml_fluz.featureV2_bank_risk_rating using de-duplicated tables
+CREATE TABLE ml_fluz.featureV2_merchant_id_risk_rating AS
+with tmp as
+(SELECT merchant_id,
+COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) AS merchant_id_bad_cnt,
+COUNT(DISTINCT transaction_log_id) AS merchant_id_cnt,
+SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) AS merchant_id_bad_amt,
+SUM(total_amount) AS merchant_id_amt,
+1.0 * COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) / COUNT(DISTINCT transaction_log_id) AS merchant_id_bad_cnt_pct,
+1.0 * SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) / SUM(total_amount) AS merchant_id_bad_amt_pct
+FROM ml_fluz.bank_transactions_label
+GROUP BY 1)
+select merchant_id, merchant_id_bad_cnt, merchant_id_cnt, merchant_id_bad_amt, merchant_id_amt, merchant_id_bad_cnt_pct, merchant_id_bad_amt_pct
+from tmp
+where merchant_id_cnt>=10;
+
+
+select count(*) from ml_fluz.featureV2_merchant_id_risk_rating;
+-- 282;
+select * from ml_fluz.featureV2_merchant_id_risk_rating;
+
+
+
+
+-- Drop ml_fluz.featureV2_insti_risk_rating if it exists
+DROP TABLE IF EXISTS ml_fluz.featureV2_insti_risk_rating;
+-- Create ml_fluz.featureV2_insti_risk_rating using de-duplicated tables
+CREATE TABLE ml_fluz.featureV2_insti_risk_rating AS
+with tmp as(
+SELECT
+CASE WHEN ins.bank_institution_auth_id IS NOT NULL THEN ins.platform_institution_name
+WHEN pc.plaid_credential_id IS NOT NULL THEN pc.institution_name
+END AS institution_name,
+COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) AS institution_bad_cnt,
+COUNT(DISTINCT transaction_log_id) AS institution_cnt,
+SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) AS institution_bad_amt,
+SUM(total_amount) AS institution_amt,
+1.0 * COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) / COUNT(DISTINCT transaction_log_id) AS institution_bad_cnt_pct,
+1.0 * SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) / SUM(total_amount) AS institution_bad_amt_pct
+FROM ml_fluz.bank_transactions_label tl
+LEFT JOIN ml_fluz.input_prod_fluz_import_v2_bank_accounts_dedup ba ON tl.bank_account_id = ba.bank_account_id
+LEFT JOIN ml_fluz.input_prod_fluz_import_v1_bank_institution_auths_dedup ins ON ba.bank_institution_auth_id = ins.bank_institution_auth_id
+LEFT JOIN ml_fluz.input_prod_fluz_import_v1_plaid_credentials_dedup pc ON ba.plaid_credential_id = pc.plaid_credential_id
+WHERE tl.bank_account_id IS NOT NULL
+GROUP BY 1)
+select institution_name, institution_bad_cnt, institution_cnt, institution_bad_amt, institution_amt, institution_bad_cnt_pct, institution_bad_amt_pct
+from tmp
+where institution_cnt>=10;
+;
+
+
+-- Count the records in ml_fluz.featureV2_insti_risk_rating
+SELECT COUNT(*) FROM ml_fluz.featureV2_insti_risk_rating;
+-- 428;
+SELECT * FROM ml_fluz.featureV2_insti_risk_rating;
+
+
+
+-- Email risk rating/updated
+DROP TABLE ml_fluz.featureV2_email_risk_rating ;
+CREATE TABLE ml_fluz.featureV2_email_risk_rating AS
+with tmp as(
+SELECT
+SPLIT_PART(email_address, '@', 2) AS email_domain,
+COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) AS email_bad_cnt,
+COUNT(DISTINCT transaction_log_id) AS email_cnt,
+SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) AS email_bad_amt,
+SUM(total_amount) AS email_amt,
+1.0 * COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) / COUNT(DISTINCT transaction_log_id) AS email_bad_cnt_pct,
+1.0 * SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) / SUM(total_amount) AS email_bad_amt_pct
+FROM ml_fluz.bank_transactions_label b
+LEFT JOIN ml_fluz.input_prod_fluz_import_v2_users_dedup s ON b.user_id = s.user_id
+GROUP BY 1)
+select email_domain, email_bad_cnt, email_cnt, email_bad_amt, email_amt, email_bad_cnt_pct, email_bad_amt_pct
+from tmp
+where email_cnt >= 10
+;
+
+
+-- Query to select records from ml_fluz.featureV2_email_risk_rating
+SELECT count(*) FROM ml_fluz.featureV2_email_risk_rating;
+-- 133;
+SELECT * FROM ml_fluz.featureV2_email_risk_rating;
+
+
+
+
+-- Inviter/updated/incremental
+-- Drop ml_fluz.featureV2_inviters_status if it exists
+Drop table ml_fluz.featureV2_inviters_status;
+create table ml_fluz.featureV2_inviters_status as
+with impacted_users as (
+select trust_status, user_id, email_address, created_at as signup_date
+from ml_fluz.input_prod_fluz_import_v2_users_dedup
+), invited_by as (
+select * from (
+select us1.user_id, us2.user_id as inviter_user_id,
+us2.first_name as inviter_first_name,
+us2.last_name as inviter_last_name, us2.email_address as inviter_email_address,
+case when us2.user_id is null then null
+when us2.trust_status = 'PASS' then true
+else false
+end as inviter1_is_clean,
+row_number() over (partition by us1.user_id order by s1.updated_at desc) as rn
+from ml_fluz.input_prod_fluz_import_v2_users_dedup us1
+left join ml_fluz.input_prod_fluz_import_v2_seats_dedup s1 on us1.owned_account_id = s1.seat_owner_id
+left join ml_fluz.input_prod_fluz_import_v2_seats_dedup s2 on s1.referrer_seat_id = s2.seat_id
+left join ml_fluz.input_prod_fluz_import_v2_users_dedup us2 on s2.seat_owner_id = us2.owned_account_id
+left join ml_fluz.input_prod_fluz_import_v1_accounts_dedup acc1 on us2.owned_account_id = acc1.account_id
+) temp
+where temp.rn <= 1 and user_id in (select user_id from impacted_users)
+)
+select b.user_id,
+max(b.signup_date) as signup_date,
+max(email_address) as email,
+MAX(invited_by.inviter_first_name) as inviter_first_name,
+MAX(invited_by.inviter_last_name) as inviter_last_name,
+MAX(invited_by.inviter_email_address) as inviter_email_address,
+MAX(case when invited_by.inviter_first_name is not null or invited_by.inviter_last_name is not null or invited_by.inviter_email_address is not null
+then 1 else 0 end) as has_inviter,
+MAX(
+CASE
+WHEN utm.user_id IS NOT NULL THEN 1
+WHEN inviter_first_name IS NULL THEN 0
+ELSE 0
+END
+) as inviter1_is_influencer,
+MAX(case when invited_by.inviter1_is_clean = true then 1 else 0 end) as inviter1_is_clean
+from impacted_users b
+left join invited_by on b.user_id = invited_by.user_id
+left join ( select * from ml_fluz.prod_fluz_import_v1_user_tags_membership_dedup utm
+where user_tag_id = 'fcb60a7e-8673-4d8a-a42d-caeb76dc63e4') utm
+on invited_by.inviter_user_id = utm.user_id
+group by 1;
+
+
+-- Query to select records from ml_fluz.featureV2_inviters_status
+SELECT count(*) FROM ml_fluz.featureV2_inviters_status;
+-- 334617;
+SELECT * FROM ml_fluz.featureV2_inviters_status;
+
+
+drop table if exists ml_fluz.featureV2_user_tier;
+create table ml_fluz.featureV2_user_tier as
+select
+a.user_id
+,sum (case when tier_level = 0 then 1
+when tier_level = 1 then 0.2 * (amount_of_days - 14)/ (45-14) + 0.5
+when tier_level = 2 then 0.2 * (amount_of_days - 14)/ (45-14) + 0.3
+when tier_level is null then 0
+end) as bank_account_tier
+,count (distinct a.bank_account_id) as bank_account_cnt
+, sum (case when tier_level = 0 then 1
+when tier_level = 1 then 0.2 * (amount_of_days - 14)/ (45-14) + 0.5
+when tier_level = 2 then 0.2 * (amount_of_days - 14)/ (45-14) + 0.3
+when tier_level is null then 0
+end) / count (distinct a.bank_account_id) as user_rr_tiers
+from ml_fluz.bank_transactions_label a
+left join ml_fluz.bank_tier_label b
+on a.bank_account_id = b.bank_account_id
+group by 1
+;
+
+
+select count(*) from ml_fluz.featureV2_user_tier where bank_account_tier = 0;
+--14964
+select * from ml_fluz.featureV2_user_tier where user_rr_tiers>0;
+
+select count(distinct user_id) from ml_fluz.bank_transactions_label;
+
+
+
+drop table ml_fluz.featureV2_bank_tier;
+create table ml_fluz.featureV2_bank_tier as
+select
+bank_account_id
+,case when tier_level = 0 then 1
+when tier_level = 1 then 0.2 * (amount_of_days - 14)/ (45-14) + 0.5
+when tier_level = 2 then 0.2 * (amount_of_days - 14)/ (45-14) + 0.3
+when tier_level is null then 0
+end as bank_rr_tiers
+from ml_fluz.bank_tier_label
+;
+select * from ml_fluz.featureV2_bank_tier where bank_rr_tiers>0;
+
+
+select * from ml_fluz.featureV2_bank_tier ;
+-- 11121;
+select count(distinct bank_account_id) from ml_fluz.featureV2_bank_tier ;
+-- 11121;
+
+
+drop table if exists ml_fluz.featureV2_ip3_risk_rating;
+CREATE TABLE ml_fluz.featureV2_ip3_risk_rating AS
+with tmp AS (
+SELECT CONCAT(SPLIT_PART(ip_address, '.', 1), '.', SPLIT_PART(ip_address, '.', 2), '.', SPLIT_PART(ip_address, '.', 3)) AS IP3,
+COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) AS ip_bad_cnt,
+COUNT(DISTINCT transaction_log_id) AS ip_cnt,
+SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) AS ip_bad_amt,
+SUM(total_amount) AS ip_amt,
+1.0 * COUNT(DISTINCT CASE WHEN is_bad = 1 THEN transaction_log_id END) / COUNT(DISTINCT transaction_log_id) AS ip_bad_cnt_pct,
+1.0 * SUM(CASE WHEN is_bad = 1 THEN total_amount ELSE 0 END) / SUM(total_amount) AS ip_bad_amt_pct
+FROM ml_fluz.bank_transactions_label
+GROUP BY 1
+) select ip3, ip_bad_cnt, ip_cnt, ip_bad_amt,ip_amt, ip_bad_cnt_pct, ip_bad_amt_pct
+from tmp
+where ip_cnt >= 10;
+
+select * from ml_fluz.featureV2_ip3_risk_rating;
+
+
